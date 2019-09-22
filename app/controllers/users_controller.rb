@@ -8,6 +8,7 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @microposts = @user.microposts.order(id: :desc).page(params[:page])
     counts(@user)
+    @likes = current_user.favpost.order(id: :desc).page(params[:page])
   end
 
   def new
@@ -36,7 +37,17 @@ class UsersController < ApplicationController
     @user = User.find(params[:id])
     @followers = @user.followers.page(params[:page])
     counts(@user)
-  end    
+  end
+  
+  def likes
+    @user = User.find(params[:id])
+    @favposts = @user.favpost.page(params[:page])
+    counts(@user)
+
+  end  
+  
+
+ 
 end
 
 private
